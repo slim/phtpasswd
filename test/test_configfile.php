@@ -37,9 +37,11 @@ EOC;
 
 	function test_apply()
 	{
-		$htaccess = new ConfigFile('.htaccess');
+		$htaccess = new ConfigFile('testhtaccess');
 		$htaccess->param('RewriteBase', 'RewriteBase /xxx/yyy/');
 		$resultat = $htaccess->apply($this->HtaccessDist);
+		$this->assertEqual($resultat, $this->HtaccessWithBase);
+		$resultat = $htaccess->apply($resultat); //apply twice
 		$this->assertEqual($resultat, $this->HtaccessWithBase);
 		$htaccess->param('RewriteRule ^x/$', 'RewriteRule ^x/$  /yyyyyyy [L]');
 		$resultat = $htaccess->apply($this->HtaccessDist);

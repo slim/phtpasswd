@@ -8,7 +8,14 @@
 		function __construct($file, $model = NULL)
 		{
 			$this->file = $file;
-			$this->model  = $model or $file .".dist";
+			$this->model = $model;
+			if (!is_file($file)) {
+				touch($file);
+			}
+			if (!$model) {
+				$this->model = $file .".back";
+				copy($this->file, $this->model);
+			}
 		}
 
 		function param($param, $value)
@@ -20,9 +27,8 @@
 		function apply($content)
 		{
 			foreach ($this->params as $p => $v) {
-				$oldcontent = $content;
 				$content = ereg_replace("([^\r\n]*)$p([^\r\n]*)", $v, $content);
-				if ($content == $oldcontent) {
+				if ($v != "" && strpos($content, $v) === FALSE) {
 					$content .= "\n$v";
 				}
 			}
