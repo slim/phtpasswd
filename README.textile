@@ -9,7 +9,8 @@ h3. install
 
 # download : http://github.com/slim/phtpasswd/tarball/master
 # untar in your DocumentRoot in a directory you want to make private
-# go to http://yourserver/your/path/auth/
+# rename the newly created directory /access
+# go to http://yourserver/your/path/access
 
 h3. security
 
