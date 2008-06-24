@@ -1,9 +1,11 @@
-<pre>
 <?php
 	require "../../ini.php";
 
 	$user = $_GET['u'];
 
-	passthru("htpasswd -D $htpasswd_file $user 2>&1");
+	exec("htpasswd -D $htpasswd_file $user 2>&1");
+
+	if ($_GET['c']) {
+		header("Location: ". $_GET['c']);
+	}
 ?>
-</pre>

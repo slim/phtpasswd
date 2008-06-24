@@ -6,3 +6,7 @@
 	$htaccess->param("AuthUserFile", "AuthUserFile $htpasswd_file");
 	$htaccess->param("Require", "Require valid-user");
 	$htaccess->update();
+
+	if ($_GET['c']) {
+		header("Location: ". $_GET['c']);
+	}
