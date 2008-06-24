@@ -39,12 +39,19 @@
 <?php
 	require "ini.php";
 
-	$htpasswd = @file_get_contents($htpasswd_file);
-	preg_match_all("/^[^\:\n]+|\n[^\:\n]+/", $htpasswd, $users);
 	$here_url = $here->url;
 	$user_del_url = $here->base()->get('./user/del/')->url;
 	$enable_auth_url = $here->base()->get('./enable/')->url;
 	$disable_auth_url = $here->base()->get('./disable/')->url;
+	$private_dir = $here->base()->get('/../')->file;
+
+	if (!is_writable($private_dir) || !is_writable("$private_dir/.htaccess")) {
+		$error = "<b>WARNING</b> parent directory or .htaccess are not writeable. <code>chmod 777 $private_dir && chmod 666 $private_dir/.htacess</code></div>"; 
+		die("<div style='background-color: yellow; border: 2px solid red; padding: 10px; margin: 10px;'>$error</div>");
+	}
+
+	$htpasswd = @file_get_contents($htpasswd_file);
+	preg_match_all("/^[^\:\n]+|\n[^\:\n]+/", $htpasswd, $users);
 ?>
 <?php if ($htpasswd) { ?>
 <div id="switch">
