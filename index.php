@@ -39,13 +39,14 @@
 <?php
 	require "ini.php";
 
-	$htpasswd = file_get_contents($htpasswd_file);
-	preg_match_all("/\n[^\:\n]+/", $htpasswd, $users);
+	$htpasswd = @file_get_contents($htpasswd_file);
+	preg_match_all("/^[^\:\n]+|\n[^\:\n]+/", $htpasswd, $users);
 	$here_url = $here->url;
 	$user_del_url = $here->base()->get('./user/del/')->url;
 	$enable_auth_url = $here->base()->get('./enable/')->url;
 	$disable_auth_url = $here->base()->get('./disable/')->url;
 ?>
+<?php if ($htpasswd) { ?>
 <div id="switch">
 <sub>
 <a id="enable" href="<?php echo "$enable_auth_url?c=$here_url"; ?>">Enable Authentication</a>
@@ -53,6 +54,7 @@
 <a id="disable" href="<?php echo "$disable_auth_url?c=$here_url"; ?>">Disable Authentication</a>
 </sub>
 </div>
+<?php } ?>
 <div id="add">
 <h1>Add/Update user</h1>
 <form method="GET" action="./user/add/">
