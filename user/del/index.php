@@ -1,7 +1,7 @@
 <?php
 	require "../../ini.php";
 
-	$user = $_GET['u'];
+	$user = escapeshellarg($_GET['u']);
 
 	exec("htpasswd -D $htpasswd_file $user 2>&1");
 
